@@ -31,11 +31,22 @@ LD_LIBRARY_PATH=${NCCL_ROOT}/lib/:${LD_LIBRARY_PATH}
 CPATH=${NCCL_ROOT}/include/:${CPATH}
 
 source /work/projects/ulhpc-tutorials/PS10-Horovod/env_ds.sh  # source python
-
+# change with the path to the venv where you installed jax
 source /home/users/gdaneri/.jaxenv/bin/activate
-
-n=5
-
+# number of simulations
+n=30
+# numer of iterations
+num_iterations=10
+# create the file 'results/gpu_time_{num_iterations}.txt' if it does not exist, eliminate it and create a new one otherwise
+if [ -f results/gpu_time_${num_iterations}.txt ]; then
+    rm results/gpu_time_${num_iterations}.txt
+fi
+touch results/gpu_time_${num_iterations}.txt
+# create the file kernel_{num_iterations}.txt if it does not exist, eliminate it and create a new one otherwise
+if [ -f results/kernel_${num_iterations}.txt ]; then
+    rm results/kernel_${num_iterations}.txt
+fi
+touch results/kernel_${num_iterations}.txt
 for i in $(seq 1 $n); do
-    python3 /home/users/gdaneri/ML_task3/P3_gpu.py
+    python3 P3_gpu.py $num_iterations  
 done

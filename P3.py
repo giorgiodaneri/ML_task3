@@ -67,7 +67,6 @@ losses = []
 for i in range(num_iterations):
     gradients = loss_grad(kernel, x, y_true)
     kernel -= learning_rate * gradients  # Update kernel with gradient descent
-
     # Compute and store the loss
     current_loss = loss_fn(kernel, x, y_true)
     losses.append(current_loss)

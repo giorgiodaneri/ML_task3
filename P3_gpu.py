@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.datasets import mnist
-import jax
 import jax.numpy as jnp
 from jax import grad
 from jax.lax import conv_general_dilated
 import tensorflow as tf
 import time 
+import sys
 
 # print the number of available GPUs
 print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -43,7 +43,8 @@ loss_grad = grad(loss_fn)
 
 # Training loop
 learning_rate = 0.01
-num_iterations = 10
+# get number of iterations from the command line
+num_iterations = int(sys.argv[1])
 
 start = time.time()
 losses = []
@@ -53,7 +54,6 @@ for i in range(num_iterations):
     # Compute and store the loss
     current_loss = loss_fn(kernel, x, y_true)
     losses.append(current_loss)
-
     # print(f"Iteration {i}, Loss: {current_loss:.4f}")
 
 # Display denoised image
@@ -61,6 +61,15 @@ y_denoised = conv_general_dilated(x.reshape(1, 1, x.shape[0], x.shape[1]), kerne
 
 end = time.time()   
 print("Time taken: ", end-start)
+
+# write the time to a file in append mode
+with open(f'gpu_time_{num_iterations}.txt', 'a') as f:
+    f.write(str(end-start) + '\n')
+
+# Write the kernel to a file in append mode to a new row
+with open(f'kernel_{num_iterations}.txt', 'a') as f:
+    flattened_kernel = kernel.flatten()
+    f.write(','.join(map(str, flattened_kernel)) + '\n')
 
 # Visualize results
 plt.figure(figsize=(8, 6))
@@ -91,4 +100,4 @@ plt.axis('off')
 
 plt.tight_layout()
 # write the plot to a file
-plt.savefig('gpu_output.png')
+plt.savefig('gpu_denoising.png')
