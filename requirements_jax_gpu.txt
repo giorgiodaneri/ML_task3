@@ -1,0 +1,34 @@
+##############################
+# SOURCE YOUR OS ENVIRONMENT #
+###############################
+
+HPCAI_ROOT="/work/projects/ulhpc-tutorials/PS10-Horovod/"
+
+# MPI, CUDA, and compilers
+module load toolchain/intelcuda
+
+# CUDNN
+export CUDNN_PATH=${HPCAI_ROOT}/soft/cudnn/install/cudnn-linux-x86_64-8.8.1.3_cuda11-archive
+export LD_LIBRARY_PATH=${CUDNN_PATH}/lib/:${LD_LIBRARY_PATH}
+export CPATH=${CUDNN_PATH}/include/:${CPATH}
+
+# NCCL
+NCCL_DEBUG=INFO # allow to check if NCCL is active
+# NCCL_ROOT=${HPCAI_ROOT}/miniconda/install/miniconda/lib/python3.10/site-packages/nvidia/nccl/ #nccl also present there
+NCCL_ROOT=/work/projects/ulhpc-tutorials/PS10-Horovod/soft/nccl/install/nccl_2.17.1-1+cuda11.0_x86_64/
+NCCL_INCLUDE_DIR=${NCCL_ROOT}/include/
+NCCL_LIBRARY=${NCCL_ROOT}/lib/
+
+LD_LIBRARY_PATH=${NCCL_ROOT}/lib/:${LD_LIBRARY_PATH}
+CPATH=${NCCL_ROOT}/include/:${CPATH}
+
+source /work/projects/ulhpc-tutorials/PS10-Horovod/env_ds.sh  # source python
+
+###################################################
+# CREATE A VIRTUALENV IN ./jjj IN YOUR REPOSITORY #
+###################################################
+
+python3 -m venv mylocalenv
+source ./mylocalenv/bin/activate
+pip install -U "jax[cuda12]"
+python -c "import jax; print(f'Jax backend: {jax.default_backend()}')"  # 1 line just for testing the installation
