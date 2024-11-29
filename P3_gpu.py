@@ -63,11 +63,11 @@ end = time.time()
 print("Time taken: ", end-start)
 
 # write the time to a file in append mode
-with open(f'gpu_time_{num_iterations}.txt', 'a') as f:
+with open(f'results/gpu_time_{num_iterations}.txt', 'a') as f:
     f.write(str(end-start) + '\n')
 
 # Write the kernel to a file in append mode to a new row
-with open(f'kernel_{num_iterations}.txt', 'a') as f:
+with open(f'results/kernel_{num_iterations}.txt', 'a') as f:
     flattened_kernel = kernel.flatten()
     f.write(','.join(map(str, flattened_kernel)) + '\n')
 

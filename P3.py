@@ -4,6 +4,7 @@ from tensorflow.keras.datasets import mnist
 import jax.numpy as jnp
 from jax import grad
 import time
+import sys
 
 # Load the MNIST dataset
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -60,7 +61,8 @@ loss_grad = grad(loss_fn)
 
 # Training loop
 learning_rate = 0.01
-num_iterations = 10
+# get number of iterations from the command line
+num_iterations = int(sys.argv[1])
 
 start = time.time()
 losses = []
@@ -76,6 +78,15 @@ y_denoised = convolution_2d(x, kernel)
 
 end = time.time()
 print("Time taken: ", end-start)
+
+# write the time to a file in append mode
+with open(f'results/cpu_time_{num_iterations}.txt', 'a') as f:
+    f.write(str(end-start) + '\n')
+
+# Write the kernel to a file in append mode to a new row
+with open(f'results/cpu_kernel_{num_iterations}.txt', 'a') as f:
+    flattened_kernel = kernel.flatten()
+    f.write(','.join(map(str, flattened_kernel)) + '\n')
 
 # Visualize results
 plt.figure(figsize=(8, 6))
