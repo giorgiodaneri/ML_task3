@@ -77,16 +77,9 @@ for i in range(num_iterations):
 y_denoised = convolution_2d(x, kernel)
 
 end = time.time()
-print("Time taken: ", end-start)
-
 # write the time to a file in append mode
-with open(f'results/cpu_time_{num_iterations}.txt', 'a') as f:
+with open(f'../results/cpu_time_{num_iterations}.txt', 'a') as f:
     f.write(str(end-start) + '\n')
-
-# Write the kernel to a file in append mode to a new row
-with open(f'results/cpu_kernel_{num_iterations}.txt', 'a') as f:
-    flattened_kernel = kernel.flatten()
-    f.write(','.join(map(str, flattened_kernel)) + '\n')
 
 # Visualize results
 plt.figure(figsize=(8, 6))

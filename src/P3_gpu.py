@@ -59,46 +59,11 @@ for i in range(num_iterations):
 # Display denoised image
 y_denoised = conv_general_dilated(x.reshape(1, 1, x.shape[0], x.shape[1]), kernel.reshape(1, 1, kernel.shape[0], kernel.shape[1]), (1, 1), 'SAME', (1, 1)).reshape(x.shape)
 
-end = time.time()   
-print("Time taken: ", end-start)
-
+end = time.time()  
 # write the time to a file in append mode
-with open(f'results/gpu_time_{num_iterations}.txt', 'a') as f:
+with open(f'../results/gpu_time_{num_iterations}.txt', 'a') as f:
     f.write(str(end-start) + '\n')
-
 # write y_denoised to a file
-np.save(f'results/gpu_denoised_{num_iterations}.npy', y_denoised)
-
+np.save(f'../results/gpu_denoised_{num_iterations}.npy', y_denoised)
 # write losses to a file
-np.save(f'results/gpu_losses_{num_iterations}.npy', losses)
-
-# Visualize results
-plt.figure(figsize=(8, 6))
-
-# Plot loss over iterations
-plt.subplot(2, 2, 1)
-plt.plot(losses)
-plt.title("Loss Curve")
-plt.xlabel("Iteration")
-plt.ylabel("Loss")
-
-# Display original noisy image
-plt.subplot(2, 2, 2)
-plt.imshow(x, cmap='gray')
-plt.title("Noisy Image")
-plt.axis('off')
-
-# Display target clean image
-plt.subplot(2, 2, 3)
-plt.imshow(y_true, cmap='gray')
-plt.title("Target (Clean Image)")
-plt.axis('off')
-
-plt.subplot(2, 2, 4)
-plt.imshow(y_denoised, cmap='gray')
-plt.title("Denoised Image")
-plt.axis('off')
-
-plt.tight_layout()
-# write the plot to a file
-plt.savefig('gpu_denoising.png')
+np.save(f'../results/gpu_losses_{num_iterations}.npy', losses)

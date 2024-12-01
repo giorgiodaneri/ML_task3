@@ -48,5 +48,5 @@ if [ -f results/kernel_${num_iterations}.txt ]; then
 fi
 touch results/kernel_${num_iterations}.txt
 for i in $(seq 1 $n); do
-    python3 P3_gpu.py $num_iterations  
+    python3 src/P3_gpu.py $num_iterations  
 done

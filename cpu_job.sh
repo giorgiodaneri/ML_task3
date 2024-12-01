@@ -25,5 +25,5 @@ if [ -f results/cpu_kernel_${num_iterations}.txt ]; then
 fi
 touch results/cpu_kernel_${num_iterations}.txt
 for i in $(seq 1 $n); do
-    python3 P3.py $num_iterations
+    python3 src/P3.py $num_iterations
 done
