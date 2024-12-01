@@ -34,9 +34,9 @@ source /work/projects/ulhpc-tutorials/PS10-Horovod/env_ds.sh  # source python
 # change with the path to the venv where you installed jax
 source /home/users/gdaneri/.jaxenv/bin/activate
 # number of simulations
-n=30
+n=5
 # numer of iterations
-num_iterations=10
+num_iterations=10000
 # create the file 'results/gpu_time_{num_iterations}.txt' if it does not exist, eliminate it and create a new one otherwise
 if [ -f results/gpu_time_${num_iterations}.txt ]; then
     rm results/gpu_time_${num_iterations}.txt

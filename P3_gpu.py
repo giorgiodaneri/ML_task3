@@ -66,10 +66,11 @@ print("Time taken: ", end-start)
 with open(f'results/gpu_time_{num_iterations}.txt', 'a') as f:
     f.write(str(end-start) + '\n')
 
-# Write the kernel to a file in append mode to a new row
-with open(f'results/kernel_{num_iterations}.txt', 'a') as f:
-    flattened_kernel = kernel.flatten()
-    f.write(','.join(map(str, flattened_kernel)) + '\n')
+# write y_denoised to a file
+np.save(f'results/gpu_denoised_{num_iterations}.npy', y_denoised)
+
+# write losses to a file
+np.save(f'results/gpu_losses_{num_iterations}.npy', losses)
 
 # Visualize results
 plt.figure(figsize=(8, 6))
