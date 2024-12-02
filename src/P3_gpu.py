@@ -7,9 +7,9 @@ from jax.lax import conv_general_dilated
 import tensorflow as tf
 import time 
 import sys
+from jax.lib import xla_bridge
 
-# print the number of available GPUs
-print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+print("Number of available GPUs: ", xla_bridge.get_backend().platform)
 
 # Load the MNIST dataset
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
